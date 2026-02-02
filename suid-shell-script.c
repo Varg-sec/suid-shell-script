@@ -28,7 +28,18 @@ int main(int argc, char **argv)
       strcat(buffer, argv[i]);
    }
 
-   system(buffer);
+   int status = system(buffer);
+
+   if (status == -1){
+      printf("Script exited with an error.");
+      return -1;
+   }
+
+   if (WIFEXITED(status)) {
+      printf("Raw status: %d\n", status);
+      printf("Extracted exit code: %d\n", WEXITSTATUS(status));
+      return WEXITSTATUS(status);
+   }
 
    return 0;
 }
