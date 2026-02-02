@@ -1,0 +1,194 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="accelerate" />
+          <option value="aiohappyeyeballs" />
+          <option value="aiohttp" />
+          <option value="aiosignal" />
+          <option value="altair" />
+          <option value="annotated-doc" />
+          <option value="annotated-types" />
+          <option value="anyio" />
+          <option value="astor" />
+          <option value="attrs" />
+          <option value="black" />
+          <option value="blake3" />
+          <option value="blinker" />
+          <option value="cachetools" />
+          <option value="cbor2" />
+          <option value="certifi" />
+          <option value="cffi" />
+          <option value="cfgv" />
+          <option value="charset-normalizer" />
+          <option value="click" />
+          <option value="cloudpickle" />
+          <option value="compressed-tensors" />
+          <option value="cryptography" />
+          <option value="depyf" />
+          <option value="dill" />
+          <option value="diskcache" />
+          <option value="distlib" />
+          <option value="distro" />
+          <option value="dnspython" />
+          <option value="einops" />
+          <option value="email-validator" />
+          <option value="fastapi" />
+          <option value="fastapi-cli" />
+          <option value="fastapi-cloud-cli" />
+          <option value="filelock" />
+          <option value="frozendict" />
+          <option value="frozenlist" />
+          <option value="fsspec" />
+          <option value="gguf" />
+          <option value="gitdb" />
+          <option value="gitpython" />
+          <option value="h11" />
+          <option value="httpcore" />
+          <option value="httptools" />
+          <option value="httpx" />
+          <option value="httpx-sse" />
+          <option value="huggingface-hub" />
+          <option value="identify" />
+          <option value="idna" />
+          <option value="imageio" />
+          <option value="iniconfig" />
+          <option value="interegular" />
+          <option value="jinja2" />
+          <option value="jiter" />
+          <option value="jsonschema" />
+          <option value="jsonschema-specifications" />
+          <option value="langcodes" />
+          <option value="language-data" />
+          <option value="lark" />
+          <option value="lazy-loader" />
+          <option value="libvirt-python" />
+          <option value="llvmlite" />
+          <option value="lm-format-enforcer" />
+          <option value="marisa-trie" />
+          <option value="markdown-it-py" />
+          <option value="markupsafe" />
+          <option value="mcp" />
+          <option value="mcp-client-for-ollama" />
+          <option value="mdurl" />
+          <option value="mistral-common" />
+          <option value="mpmath" />
+          <option value="msgpack" />
+          <option value="msgspec" />
+          <option value="multidict" />
+          <option value="mypy-extensions" />
+          <option value="narwhals" />
+          <option value="networkx" />
+          <option value="ninja" />
+          <option value="nodeenv" />
+          <option value="numba" />
+          <option value="numpy" />
+          <option value="ollama" />
+          <option value="ollmcp" />
+          <option value="openai" />
+          <option value="openai-harmony" />
+          <option value="opencv-python-headless" />
+          <option value="outlines-core" />
+          <option value="packaging" />
+          <option value="pandas" />
+          <option value="partial-json-parser" />
+          <option value="pathspec" />
+          <option value="pillow" />
+          <option value="platformdirs" />
+          <option value="pluggy" />
+          <option value="pre-commit" />
+          <option value="prometheus-client" />
+          <option value="prometheus-fastapi-instrumentator" />
+          <option value="prompt-toolkit" />
+          <option value="propcache" />
+          <option value="protobuf" />
+          <option value="psutil" />
+          <option value="py-cpuinfo" />
+          <option value="pyarrow" />
+          <option value="pybase64" />
+          <option value="pycountry" />
+          <option value="pydantic" />
+          <option value="pydantic-core" />
+          <option value="pydantic-extra-types" />
+          <option value="pydantic-settings" />
+          <option value="pydeck" />
+          <option value="pygments" />
+          <option value="pyjwt" />
+          <option value="pytest" />
+          <option value="python-dateutil" />
+          <option value="python-dotenv" />
+          <option value="python-json-logger" />
+          <option value="python-multipart" />
+          <option value="pytokens" />
+          <option value="pytz" />
+          <option value="pyyaml" />
+          <option value="pyzmq" />
+          <option value="ray" />
+          <option value="referencing" />
+          <option value="regex" />
+          <option value="requests" />
+          <option value="rich" />
+          <option value="rich-toolkit" />
+          <option value="rignore" />
+          <option value="rpds-py" />
+          <option value="safetensors" />
+          <option value="scikit-image" />
+          <option value="scipy" />
+          <option value="sentencepiece" />
+          <option value="sentry-sdk" />
+          <option value="setproctitle" />
+          <option value="setuptools" />
+          <option value="shellingham" />
+          <option value="six" />
+          <option value="smmap" />
+          <option value="sniffio" />
+          <option value="soundfile" />
+          <option value="soxr" />
+          <option value="sse-starlette" />
+          <option value="starlette" />
+          <option value="streamlit" />
+          <option value="sympy" />
+          <option value="tenacity" />
+          <option value="tifffile" />
+          <option value="tiktoken" />
+          <option value="tokenizers" />
+          <option value="toml" />
+          <option value="torch" />
+          <option value="torchaudio" />
+          <option value="torchvision" />
+          <option value="tornado" />
+          <option value="tqdm" />
+          <option value="transformers" />
+          <option value="typer" />
+          <option value="typing-extensions" />
+          <option value="typing-inspection" />
+          <option value="tzdata" />
+          <option value="urllib3" />
+          <option value="uvicorn" />
+          <option value="virtualenv" />
+          <option value="vllm" />
+          <option value="watchfiles" />
+          <option value="wcwidth" />
+          <option value="websockets" />
+          <option value="yarl" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E203" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="numpy.random.bit_generator.ISeedSequence.entropy" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
