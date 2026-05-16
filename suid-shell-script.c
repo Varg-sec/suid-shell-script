@@ -6,6 +6,9 @@
 
 int main(int argc, char **argv)
 {
+   uid_t ruid = getuid(); // user who called the executable
+   char uid[32];
+   sprintf(uid, "--user-id %d", ruid);
    setuid(0);
    char *script_path = SCRIPTPATH;
 
@@ -17,6 +20,9 @@ int main(int argc, char **argv)
    for (int i = 1; i < argc; i++) {
       arglength = arglength + strlen(argv[i]);
    }
+   if (argc > 1 && strcmp(argv[1], "mount") == 0) {
+       arglength += strlen(uid);
+    }
 
    // Allocate an appropriately sized buffer for our system call
    // char *buffer = malloc (strlen(script_path) * sizeof(char) + strlen(seperator) * argc * sizeof(char) + arglength * sizeof(char));
@@ -27,6 +33,10 @@ int main(int argc, char **argv)
       strcat(buffer, seperator);
       strcat(buffer, argv[i]);
    }
+   if (argc > 1 && strcmp(argv[1], "mount") == 0) {
+       strcat(buffer, seperator);
+       strcat(buffer, uid);
+    }
 
    int status = system(buffer);
 
