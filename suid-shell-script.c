@@ -1,55 +1,76 @@
+#define _POSIX_C_SOURCE 200809L
+
+#include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <unistd.h>
+
+/* An elevated invocation must never follow a caller-writable path. */
+static bool trusted_script_path(const char *path)
+{
+    char *prefix = strdup(path);
+    if (prefix == NULL)
+        return false;
+
+    bool trusted = true;
+    for (char *cursor = prefix + 1; ; cursor++) {
+        bool is_script = *cursor == '\0';
+        if (!is_script && *cursor != '/')
+            continue;
+
+        struct stat entry;
+        *cursor = '\0';
+        if (lstat(prefix, &entry) != 0 || entry.st_uid != 0 ||
+            (entry.st_mode & (S_IWGRP | S_IWOTH)) ||
+            (is_script ? !S_ISREG(entry.st_mode) : !S_ISDIR(entry.st_mode))) {
+            trusted = false;
+            break;
+        }
+        if (is_script)
+            break;
+        *cursor = '/';
+    }
+
+    free(prefix);
+    return trusted;
+}
 
 int main(int argc, char **argv)
 {
-   uid_t ruid = getuid(); // user who called the executable
-   char uid[32];
-   sprintf(uid, "--user-id %d", ruid);
-   setuid(0);
-   char *script_path = SCRIPTPATH;
-
-   char **args = malloc(argc * sizeof(char));
-   char *seperator = " ";
-
-   // Calculate the sum the string lengths of all args
-   int arglength = 0;
-   for (int i = 1; i < argc; i++) {
-      arglength = arglength + strlen(argv[i]);
-   }
-   if (argc > 1 && strcmp(argv[1], "mount") == 0) {
-       arglength += strlen(uid);
+    char script_path[] = SCRIPTPATH;
+    uid_t caller = getuid();
+    uid_t effective_user = geteuid();
+    if (script_path[0] != '/' || script_path[1] == '\0' ||
+        (caller != effective_user && !trusted_script_path(script_path))) {
+        fprintf(stderr, "serveqcow2: untrusted script path: %s\n", script_path);
+        return EXIT_FAILURE;
     }
 
-   // Allocate an appropriately sized buffer for our system call
-   // char *buffer = malloc (strlen(script_path) * sizeof(char) + strlen(seperator) * argc * sizeof(char) + arglength * sizeof(char));
-   char *buffer = malloc (strlen(script_path) + strlen(seperator) * argc + arglength );
-   // Join the string and the arguments
-   strcpy(buffer, script_path);
-   for (int i = 1; i < argc; i++) {
-      strcat(buffer, seperator);
-      strcat(buffer, argv[i]);
-   }
-   if (argc > 1 && strcmp(argv[1], "mount") == 0) {
-       strcat(buffer, seperator);
-       strcat(buffer, uid);
+    char **script_args = calloc((size_t)argc + 3, sizeof(*script_args));
+    if (script_args == NULL) {
+        perror("serveqcow2: allocating arguments");
+        return EXIT_FAILURE;
+    }
+    script_args[0] = script_path;
+    for (int i = 1; i < argc; i++)
+        script_args[i] = argv[i];
+
+    char uid[32];
+    if (argc > 1 && (strcmp(argv[1], "mount") == 0 || strcmp(argv[1], "m") == 0)) {
+        snprintf(uid, sizeof(uid), "%ju", (uintmax_t)caller);
+        script_args[argc] = "--user-id";
+        script_args[argc + 1] = uid;
     }
 
-   int status = system(buffer);
+    /* Use the system tools and prevent shell startup settings from the caller. */
+    char *const environment[] = {"PATH=/usr/sbin:/usr/bin:/sbin:/bin", "LC_ALL=C", NULL};
+    if (setuid(effective_user) == 0)
+        execve(script_path, script_args, environment);
 
-   if (status == -1){
-      printf("Script exited with an error.");
-      return -1;
-   }
-
-   if (WIFEXITED(status)) {
-      printf("Raw status: %d\n", status);
-      printf("Extracted exit code: %d\n", WEXITSTATUS(status));
-      return WEXITSTATUS(status);
-   }
-
-   return 0;
+    perror("serveqcow2");
+    free(script_args);
+    return EXIT_FAILURE;
 }
